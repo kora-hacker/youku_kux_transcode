@@ -1,7 +1,5 @@
 package com.lemox.util;
 
-import java.io.IOException;
-
 public class TranscodeThread extends Thread
 {
 	public String src_path;
