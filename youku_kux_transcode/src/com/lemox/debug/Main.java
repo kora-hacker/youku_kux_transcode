@@ -3,21 +3,41 @@ package com.lemox.debug;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class Main {
+import com.lemox.util.TranscodeThread;
 
-	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		Runtime rt = Runtime.getRuntime();
-		System.out.println("test");
-		Process p = rt.exec("ping www.baidu.com");
-		BufferedReader br = null;
-		br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		String line = null;
-		while ((line = br.readLine()) != null)
+public class Main
+{
+	public static final String src_path = "D:\\Youku Files\\download\\done\\";
+	
+	
+	
+	public static boolean is_kux_file(String str)
+	{
+		if (       str.charAt(str.length() - 4) == '.'
+				&& str.charAt(str.length() - 3) == 'k'
+				&& str.charAt(str.length() - 2) == 'u'
+				&& str.charAt(str.length() - 1) == 'x')
 		{
-			System.out.println(line);
+			return true;
+		} else
+		{
+			return false;
 		}
+	}
+	
+	public static void main(String[] args) throws IOException
+	{
+		// TODO Auto-generated method stub
+		ExecutorService thread_pool = Executors.newFixedThreadPool(1);
+		for (int i = 0; i < 10; i++)
+		{
+			thread_pool.execute(new TranscodeThread());
+		}
+		thread_pool.shutdown();
 	}
 
 }
